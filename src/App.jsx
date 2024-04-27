@@ -18,7 +18,9 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 
 /* Theme variables */
+
 import Router from "./pages/router";
+
 import "./theme/variables.css";
 
 setupIonicReact();

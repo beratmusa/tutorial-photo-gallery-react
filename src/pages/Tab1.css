@@ -1,0 +1,33 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.h-screen {
+  height: 100vh !important;
+}
+
+.t-0 {
+  top: 0;
+}
+
+.b-0 {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr; /* Satırları eşit yükseklikte yapar */ /* Satırları eşit aralıklarla dikey olarak hizalar */
+}
+
+.row-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  width: 250px;
+  height: 47px;
+}

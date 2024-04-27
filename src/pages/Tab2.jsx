@@ -3,7 +3,7 @@ import { IonContent, IonPage } from "@ionic/react";
 const Tab2 = () => {
   return (
     <IonPage>
-      <IonContent fullscreen></IonContent>
+      <IonContent fullscreen color={"light"}></IonContent>
     </IonPage>
   );
 };
