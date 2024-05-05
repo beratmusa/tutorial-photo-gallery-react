@@ -1,7 +1,7 @@
 const config = {
-  appId: "io.ionic.starter",
-  appName: "start-up",
-  webDir: "dist",
+  appId: "photo-gallery-capacitor-react",
+  appName: "Proje-1",
+  webDir: "build",
   server: {
     androidScheme: "https",
   },

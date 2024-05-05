@@ -1,0 +1,21 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.brown {
+  color: #a34343;
+  font-size: larger;
+  margin-bottom: 7px;
+}
+
+.blue {
+  color: #6f95b4;
+  text-align: center;
+}
+
+.top-content {
+  margin-bottom: 12px;
+}

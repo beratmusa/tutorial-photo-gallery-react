@@ -6,9 +6,14 @@ import {
   IonPage,
   IonRow,
 } from "@ionic/react";
+import React, { useState } from "react";
+import { usePhotoGallery } from "../hooks/usePhotoGallery";
 import "./Tab1.css";
 
 const Tab1 = () => {
+  const { deletePhoto, photos, takePhoto } = usePhotoGallery();
+  const [photoToDelete, setPhotoToDelete] = useState();
+
   return (
     <IonPage>
       <IonContent fullscreen color={"light"}>
@@ -27,10 +32,14 @@ const Tab1 = () => {
               </IonCol>
             </IonRow>
             <IonRow className="ion-justify-content-center ion-align-items-center row-container">
-              <IonButton className="ion-margin-bottom buttons" shape="round">
+              <IonButton
+                onClick={() => takePhoto()}
+                className="ion-margin-bottom buttons"
+                shape="round"
+              >
                 QR OKUT
               </IonButton>
-              <IonButton className="buttons" shape="round">
+              <IonButton routerLink="/Tab2" className="buttons" shape="round">
                 DOLULUK ORANI
               </IonButton>
             </IonRow>
@@ -50,9 +59,3 @@ const Tab1 = () => {
 };
 
 export default Tab1;
-
-{
-  /* <IonContent fullscreen className="transparan z-1">
-<IonButton shape="round">Round</IonButton>
-</IonContent> */
-}

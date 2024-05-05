@@ -968,10 +968,10 @@
   resolved "https://registry.npmjs.org/@capacitor/app/-/app-5.0.6.tgz"
   integrity sha512-6ZXVdnNmaYILasC/RjQw+yfTmq2ZO7Q3v5lFcDVfq3PFGnybyYQh+RstBrYri+376OmXOXxBD7E6UxBhrMzXGA==
 
-"@capacitor/camera@^5.0.7":
-  version "5.0.7"
-  resolved "https://registry.npmjs.org/@capacitor/camera/-/camera-5.0.7.tgz"
-  integrity sha512-1Wk3Dk0UhhNHdBB07UrPvUOSL7Wi5gFZRyLY1LZL2awt34iqy2cnajtfJplFmEZHk8lD0i7NAl3HbkWm4td4OQ==
+"@capacitor/camera@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/camera/-/camera-6.0.0.tgz#c4f82d499d836fc9b9de935adac8de36bce52cc4"
+  integrity sha512-AZ/gfVPC3lsKbk9/yHI60ygNyOkN5jsCb4bHxXFbW0bss3XYtR/J1XWFJGkFNiRErNnTz6jnDrhsGCr7+JPfiA==
 
 "@capacitor/cli@5.5.0":
   version "5.5.0"
@@ -2193,6 +2193,20 @@
   version "0.8.10"
   resolved "https://registry.npmjs.org/@xmldom/xmldom/-/xmldom-0.8.10.tgz"
   integrity sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==
+
+"@zxing/library@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.npmjs.org/@zxing/library/-/library-0.21.0.tgz"
+  integrity sha512-2+DFYM6NLl+ZXXUbDOkmVn4TAAOgTniEx5MJD2kStujcxSl6j9CfAgIT8DcsBYIlT5DW7oeiShEzWZjpL0hNOw==
+  dependencies:
+    ts-custom-error "^3.2.1"
+  optionalDependencies:
+    "@zxing/text-encoding" "~0.9.0"
+
+"@zxing/text-encoding@~0.9.0":
+  version "0.9.0"
+  resolved "https://registry.npmjs.org/@zxing/text-encoding/-/text-encoding-0.9.0.tgz"
+  integrity sha512-U/4aVJ2mxI0aDNI8Uq0wEhMgY+u4CNtEb0om3+y3+niDAsoTCOB33UF0sxpzqzdqXLqmvc+vZyAt4O8pPdfkwA==
 
 abab@^2.0.6:
   version "2.0.6"
@@ -4848,7 +4862,7 @@ plist@^3.0.5, plist@^3.0.6:
 
 postcss@^8.4.27:
   version "8.4.38"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.38.tgz#b387d533baf2054288e337066d81c6bee9db9e0e"
+  resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.38.tgz"
   integrity sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==
   dependencies:
     nanoid "^3.3.7"
@@ -5654,6 +5668,11 @@ tree-kill@^1.2.2:
   version "1.2.2"
   resolved "https://registry.npmjs.org/tree-kill/-/tree-kill-1.2.2.tgz"
   integrity sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==
+
+ts-custom-error@^3.2.1:
+  version "3.3.1"
+  resolved "https://registry.npmjs.org/ts-custom-error/-/ts-custom-error-3.3.1.tgz"
+  integrity sha512-5OX1tzOjxWEgsr/YEUWSuPrQ00deKLh6D7OTWcvNHm12/7QPyRh8SYpyWvA4IZv8H/+GQWQEh/kwo95Q9OVW1A==
 
 tslib@*, tslib@^2.0.1, tslib@^2.1.0, tslib@^2.4.0:
   version "2.6.2"

@@ -29,8 +29,6 @@ const Tab2 = () => {
     const logResult = (result) => {
       console.log(JSON.stringify(result, null, 2));
     };
-
-    // JSX içinde kullanım örneği
   }
 
   return (

@@ -3,6 +3,7 @@
   "private": true,
   "version": "4.0.0",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -14,7 +15,7 @@
   "dependencies": {
     "@capacitor/android": "5.5.0",
     "@capacitor/app": "5.0.6",
-    "@capacitor/camera": "^5.0.7",
+    "@capacitor/camera": "^6.0.0",
     "@capacitor/core": "5.5.0",
     "@capacitor/filesystem": "5.1.1",
     "@capacitor/haptics": "5.0.6",
@@ -27,6 +28,7 @@
     "@ionic/react-router": "^7.0.0",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
+    "@zxing/library": "^0.21.0",
     "axios": "^1.4.0",
     "firebase": "^10.0.0",
     "ionicons": "^7.0.0",
