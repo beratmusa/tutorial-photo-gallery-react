@@ -7,26 +7,50 @@ import {
   IonPopover,
   IonRow,
 } from "@ionic/react";
+import { ref, set } from "firebase/database"; // Firebase Realtime Database import
 import React, { useState } from "react";
 import QrReader from "react-qr-scanner";
+import { useHistory } from "react-router-dom";
+import { database } from "../firebaseConfig";
 import "./Tab1.css";
 
 const Tab1 = () => {
   const [scan, setScan] = useState(false);
   const [result, setResult] = useState("");
+  const history = useHistory();
 
   const handleScan = (data) => {
     if (data) {
       setResult(data);
       setScan(false);
-      // Burada QR koddan gelen veriyi işleyin
       console.log(data);
-      alert(`QR kod okundu: ${data}`);
+      const parkId = data.text; // Burada QR koddan gelen veriyi kullanın
+      alert("QR Kodu Okundu: " + parkId);
+
+      // Park yerinin durumunu güncelle
+      updateParkStatus(parkId, "dolu");
+
+      // Park detay sayfasına yönlendirme
+      history.push(`/tab3/${parkId}`);
     }
   };
 
   const handleError = (err) => {
     console.error(err);
+  };
+
+  // Park yerinin durumunu güncelleyen fonksiyon
+  const updateParkStatus = (parkId, status) => {
+    const parkRef = ref(database, "parkYerleri/" + parkId);
+    set(parkRef, {
+      durum: status,
+    })
+      .then(() => {
+        console.log("Park yeri durumu güncellendi.");
+      })
+      .catch((error) => {
+        console.error("Park yeri durumu güncellenirken hata oluştu:", error);
+      });
   };
 
   return (
@@ -59,28 +83,19 @@ const Tab1 = () => {
                 DOLULUK ORANI
               </IonButton>
             </IonRow>
-            <IonPopover trigger="click-trigger" triggerAction="click">
-              {scan && (
+            <IonPopover isOpen={scan} onDidDismiss={() => setScan(false)}>
+              <div style={{ padding: 20 }}>
                 <QrReader
                   delay={300}
                   onError={handleError}
                   onScan={handleScan}
                   style={{ width: "100%" }}
                 />
-              )}
-              {result && <p>Sonuç: {result}</p>}
+                <IonButton onClick={() => setScan(false)} color="danger">
+                  Kapat
+                </IonButton>
+              </div>
             </IonPopover>
-            {/* <IonRow className="ion-justify-content-center ion-align-items-center">
-              {scan && (
-                <QrReader
-                  delay={300}
-                  onError={handleError}
-                  onScan={handleScan}
-                  style={{ width: "100%" }}
-                />
-              )}
-              {result && <p>Sonuç: {result}</p>}
-            </IonRow> */}
             <IonRow>
               <IonCol>
                 <img className="ion-margin-bottom" src="../Group2.svg" alt="" />

@@ -15,9 +15,10 @@ import "./Tab2.css";
 const Tab2 = () => {
   const history = useHistory();
   const [showActionSheet, setShowActionSheet] = useState(false);
+  const [parkYerleri, setParkYerleri] = useState([]);
+  const [selectedParkId, setSelectedParkId] = useState(null);
   const modal = useRef(null);
   const page = useRef(null);
-
   const [presentingElement, setPresentingElement] = useState(null);
 
   useEffect(() => {
@@ -192,33 +193,3 @@ const Tab2 = () => {
 };
 
 export default Tab2;
-
-{
-  /* <IonButton className="b-0" id="open-custom-dialog" expand="block">
-Boş Yerleri Gör
-</IonButton>
-<IonModal id="example-modal" ref={modal} trigger="open-custom-dialog">
-<div className="wrapper">
-  <h1>Dialog header</h1>
-
-  <IonList lines="none">
-    <IonItem button={true} detail={false} onClick={dismiss}>
-      <IonIcon icon={personCircle}></IonIcon>
-      <IonLabel>Item 1</IonLabel>
-    </IonItem>
-    <IonItem button={true} detail={false} onClick={dismiss}>
-      <IonIcon icon={personCircle}></IonIcon>
-      <IonLabel>Item 2</IonLabel>
-    </IonItem>
-    <IonItem button={true} detail={false} onClick={dismiss}>
-      <IonIcon icon={personCircle}></IonIcon>
-      <IonLabel>Item 3</IonLabel>
-    </IonItem>
-  </IonList>
-</div>
-</IonModal> */
-}
-
-{
-  /*  */
-}

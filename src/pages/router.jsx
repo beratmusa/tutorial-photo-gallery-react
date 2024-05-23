@@ -19,7 +19,7 @@ const Router = () => {
           <Route exact path="/tab2">
             <Tab2 />
           </Route>
-          <Route exact path="/tab3">
+          <Route exact path="/tab3/:parkId">
             <Tab3 />
           </Route>
         </IonRouterOutlet>
