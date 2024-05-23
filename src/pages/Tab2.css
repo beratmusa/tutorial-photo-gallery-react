@@ -1,1 +1,23 @@
+.block ion-button {
+  width: 70px;
+  height: 33px;
+  text-align: center;
+}
 
+ion-item {
+  margin-bottom: 12px;
+}
+
+.block {
+  display: flex;
+  /* flex-direction: column;
+  align-items: center; */
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background-color: #caddec;
+}
+
+ion-list {
+  padding: 30px;
+}
