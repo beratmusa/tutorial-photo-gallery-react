@@ -7,40 +7,64 @@ import {
   IonModal,
   IonPage,
 } from "@ionic/react";
+import { getDatabase, onValue, ref, set } from "firebase/database";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-
+import { database } from "../firebaseConfig";
 import "./Tab2.css";
 
 const Tab2 = () => {
   const history = useHistory();
   const [showActionSheet, setShowActionSheet] = useState(false);
   const [parkYerleri, setParkYerleri] = useState([]);
-  const [selectedParkId, setSelectedParkId] = useState(null);
+  const [emptyParkingSpaces, setEmptyParkingSpaces] = useState([]);
   const modal = useRef(null);
   const page = useRef(null);
-  const [presentingElement, setPresentingElement] = useState(null);
 
   useEffect(() => {
-    setPresentingElement(page.current);
+    // Firebase'den verileri çek
+    const db = getDatabase();
+    const parkYerleriRef = ref(db, "parkYerleri");
+
+    onValue(
+      parkYerleriRef,
+      (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          setParkYerleri(data); // Tüm park yerlerini al
+          const emptySpaces = Object.keys(data).filter(
+            (key) => data[key].durum === "boş"
+          );
+          setEmptyParkingSpaces(emptySpaces);
+        } else {
+          setParkYerleri([]);
+          setEmptyParkingSpaces([]);
+        }
+      },
+      (error) => {
+        console.error("Firebase verilerini çekerken hata oluştu:", error);
+      }
+    );
   }, []);
 
   function dismiss() {
     modal.current?.dismiss();
   }
 
-  function shareAction() {
-    console.log("Share action triggered");
-    history.push("/Tab3");
-    setShowActionSheet(false);
-    dismiss();
-    // Paylaşma işlemi ile ilgili kod buraya yazılır
-  }
-
-  function Example() {
-    const logResult = (result) => {
-      console.log(JSON.stringify(result, null, 2));
-    };
+  function reserveSpace(parkId) {
+    const spaceRef = ref(database, "parkYerleri/" + parkId);
+    set(spaceRef, {
+      durum: "dolu",
+    })
+      .then(() => {
+        console.log("Park yeri rezerve edildi.");
+        history.push(`/tab3/${parkId}`);
+        setShowActionSheet(false);
+        dismiss();
+      })
+      .catch((error) => {
+        console.error("Park yeri rezervasyonu sırasında hata oluştu:", error);
+      });
   }
 
   return (
@@ -51,7 +75,7 @@ const Tab2 = () => {
             <p>Boş Yer Sayısı</p>
           </div>
           <div className="bottom-round">
-            <p>21</p>
+            <p>{emptyParkingSpaces.length}</p>
           </div>
         </div>
         <IonButton className="b-0" id="open-modal">
@@ -65,125 +89,35 @@ const Tab2 = () => {
         >
           <div className="block">
             <IonList inset={true}>
-              <IonItem>
-                <IonButton
-                  id="open-action-sheet"
-                  onClick={() => setShowActionSheet(true)}
-                >
-                  P 2
-                </IonButton>
-                <IonActionSheet
-                  isOpen={showActionSheet}
-                  onDidDismiss={() => setShowActionSheet(false)}
-                  header="Rezevasyon"
-                  buttons={[
-                    {
-                      text: "Rezerve Et",
-                      handler: shareAction,
-                    },
-                    {
-                      text: "Cancel",
-                      role: "destructive",
-                      handler: () => {
-                        console.log("Cancel action triggered");
-                        setShowActionSheet(false); // Close the action sheet
+              {emptyParkingSpaces.map((parkId) => (
+                <IonItem key={parkId}>
+                  <IonButton
+                    id={`open-action-sheet-${parkId}`}
+                    onClick={() => setShowActionSheet(parkId)}
+                  >
+                    {parkId}
+                  </IonButton>
+                  <IonActionSheet
+                    isOpen={showActionSheet === parkId}
+                    onDidDismiss={() => setShowActionSheet(false)}
+                    header="Rezevasyon"
+                    buttons={[
+                      {
+                        text: "Rezerve Et",
+                        handler: () => reserveSpace(parkId),
                       },
-                    },
-                  ]}
-                />
-              </IonItem>
-              <IonItem>
-                <IonButton id="open-action-sheet-2">P 12</IonButton>
-                <IonActionSheet
-                  trigger="open-action-sheet-2"
-                  header="Rezevasyon"
-                  buttons={[
-                    {
-                      text: "Rezerve Et",
-                      data: {
-                        action: "share",
+                      {
+                        text: "Cancel",
+                        role: "destructive",
+                        handler: () => {
+                          console.log("Cancel action triggered");
+                          setShowActionSheet(false);
+                        },
                       },
-                    },
-                    {
-                      text: "Cancel",
-                      role: "destructive",
-                      data: {
-                        action: "cancel",
-                      },
-                    },
-                  ]}
-                  onDidDismiss={({ detail }) => logResult(detail)}
-                ></IonActionSheet>
-              </IonItem>
-              <IonItem>
-                <IonButton id="open-action-sheet-3">P 4</IonButton>
-                <IonActionSheet
-                  trigger="open-action-sheet-3"
-                  header="Rezevasyon"
-                  buttons={[
-                    {
-                      text: "Rezerve Et",
-                      data: {
-                        action: "share",
-                      },
-                    },
-                    {
-                      text: "Cancel",
-                      role: "destructive",
-                      data: {
-                        action: "cancel",
-                      },
-                    },
-                  ]}
-                  onDidDismiss={({ detail }) => logResult(detail)}
-                ></IonActionSheet>
-              </IonItem>
-              <IonItem>
-                <IonButton id="open-action-sheet-4">P 11</IonButton>
-                <IonActionSheet
-                  trigger="open-action-sheet-4"
-                  header="Rezevasyon"
-                  buttons={[
-                    {
-                      text: "Rezerve Et",
-                      data: {
-                        action: "share",
-                      },
-                    },
-                    {
-                      text: "Cancel",
-                      role: "destructive",
-                      data: {
-                        action: "cancel",
-                      },
-                    },
-                  ]}
-                  onDidDismiss={({ detail }) => logResult(detail)}
-                ></IonActionSheet>
-              </IonItem>
-              <IonItem>
-                <IonButton id="open-action-sheet-5">P 21</IonButton>
-                <IonActionSheet
-                  trigger="open-action-sheet-5"
-                  header="Rezevasyon"
-                  buttons={[
-                    {
-                      text: "Rezerve Et",
-                      data: {
-                        action: "share",
-                      },
-                    },
-                    {
-                      text: "Cancel",
-                      role: "destructive",
-                      data: {
-                        action: "cancel",
-                      },
-                    },
-                  ]}
-                  onDidDismiss={({ detail }) => logResult(detail)}
-                ></IonActionSheet>
-              </IonItem>
+                    ]}
+                  />
+                </IonItem>
+              ))}
             </IonList>
           </div>
         </IonModal>
