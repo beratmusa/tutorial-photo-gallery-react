@@ -1,45 +1,68 @@
 import { IonButton, IonContent, IonPage } from "@ionic/react";
-import { ref, set } from "firebase/database";
+import { getDatabase, onValue, ref, update } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { database } from "../firebaseConfig";
-
 import "./Tab3.css";
 
 const Tab3 = () => {
   const { parkId } = useParams();
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [startTime, setStartTime] = useState(null);
   const history = useHistory();
-  const initialTime = Date.now();
 
   useEffect(() => {
-    // Her saniye sayaçı güncelle
-    const timer = setInterval(() => {
-      const currentTime = Date.now();
-      const elapsedTimeInSeconds = Math.floor(
-        (currentTime - initialTime) / 1000
-      );
-      setElapsedTime(elapsedTimeInSeconds);
+    const db = getDatabase();
+    const startTimeRef = ref(db, "parkYerleri/" + parkId + "/startTime");
+
+    const fetchData = () => {
+      onValue(startTimeRef, (snapshot) => {
+        const startTimeValue = snapshot.val();
+        if (startTimeValue) {
+          setStartTime(startTimeValue);
+        }
+      });
+    };
+
+    fetchData(); // Initial fetch
+
+    const interval = setInterval(() => {
+      if (startTime) {
+        const currentTime = Date.now();
+        const elapsedTimeInSeconds = Math.floor(
+          (currentTime - startTime) / 1000
+        );
+        setElapsedTime(elapsedTimeInSeconds);
+      }
     }, 1000);
 
-    // Component unmount olduğunda timer'ı temizle
-    return () => clearInterval(timer);
-  }, [initialTime]);
+    return () => clearInterval(interval);
+  }, [parkId, startTime]);
 
-  // Fiyat hesaplama fonksiyonu, örneğin her saniye 1 TL gibi
-  const calculatePrice = (elapsedTime) => {
-    // Örnek fiyat hesaplama
-    const pricePerSecond = 0.25; // Her saniye 1 TL
-    return elapsedTime * pricePerSecond;
+  const formatTime = (seconds) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return `${h} saat ${m} dakika ${s} saniye`;
+  };
+
+  // Fiyat hesaplama fonksiyonu, örneğin her saniye 0.50 TL gibi
+  const calculatePrice = (seconds) => {
+    const pricePerMinute = 0.5;
+    const minutes = Math.floor(seconds / 60);
+    return (minutes * pricePerMinute).toFixed(2);
   };
 
   const handleExit = () => {
     const parkRef = ref(database, "parkYerleri/" + parkId);
-    set(parkRef, {
+    update(parkRef, {
       durum: "boş",
+      startTime: null,
     })
       .then(() => {
         console.log("Park yeri durumu güncellendi.");
+        setElapsedTime(0); // Clear elapsed time
+        setStartTime(null); // Clear start time
         history.push("/");
       })
       .catch((error) => {
@@ -61,7 +84,7 @@ const Tab3 = () => {
         <div className="content">
           <div className="top-content">
             <p className="brown">Durulan Süre</p>
-            <p className="blue">{elapsedTime}</p>
+            <p className="blue">{formatTime(elapsedTime)}</p>
           </div>
           <div className="bottom-content">
             <p className="brown">Ödenecek Ücret</p>

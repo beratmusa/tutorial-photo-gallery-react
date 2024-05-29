@@ -7,7 +7,7 @@ import {
   IonModal,
   IonPage,
 } from "@ionic/react";
-import { getDatabase, onValue, ref, set } from "firebase/database";
+import { getDatabase, onValue, ref, update } from "firebase/database";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { database } from "../firebaseConfig";
@@ -20,8 +20,10 @@ const Tab2 = () => {
   const [emptyParkingSpaces, setEmptyParkingSpaces] = useState([]);
   const modal = useRef(null);
   const page = useRef(null);
+  const [presentingElement, setPresentingElement] = useState(null);
 
   useEffect(() => {
+    setPresentingElement(page.current);
     // Firebase'den verileri çek
     const db = getDatabase();
     const parkYerleriRef = ref(db, "parkYerleri");
@@ -53,8 +55,10 @@ const Tab2 = () => {
 
   function reserveSpace(parkId) {
     const spaceRef = ref(database, "parkYerleri/" + parkId);
-    set(spaceRef, {
+    const newStartTime = Date.now();
+    update(spaceRef, {
       durum: "dolu",
+      startTime: newStartTime,
     })
       .then(() => {
         console.log("Park yeri rezerve edildi.");
