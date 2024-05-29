@@ -44,6 +44,7 @@ const Tab1 = () => {
     const parkRef = ref(database, "parkYerleri/" + parkId);
     set(parkRef, {
       durum: status,
+      startTime: Date.now(),
     })
       .then(() => {
         console.log("Park yeri durumu güncellendi.");

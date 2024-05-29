@@ -1,5 +1,6 @@
-import { IonButton, IonContent, IonPage } from "@ionic/react";
+import { IonButton, IonContent, IonIcon, IonPage } from "@ionic/react";
 import { getDatabase, onValue, ref, update } from "firebase/database";
+import { timerOutline, walletOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { database } from "../firebaseConfig";
@@ -83,10 +84,18 @@ const Tab3 = () => {
         </div>
         <div className="content">
           <div className="top-content">
+            <IonIcon
+              icon={timerOutline}
+              style={{ fontSize: "2em", color: "#362bb0" }}
+            />
             <p className="brown">Durulan Süre</p>
             <p className="blue">{formatTime(elapsedTime)}</p>
           </div>
           <div className="bottom-content">
+            <IonIcon
+              icon={walletOutline}
+              style={{ fontSize: "2em", color: "#362bb0" }}
+            />
             <p className="brown">Ödenecek Ücret</p>
             <p className="blue">{calculatePrice(elapsedTime)} ₺</p>
           </div>

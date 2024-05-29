@@ -33,7 +33,7 @@ const Tab2 = () => {
       (snapshot) => {
         const data = snapshot.val();
         if (data) {
-          setParkYerleri(data); // Tüm park yerlerini al
+          setParkYerleri(data); // Boş park yerlerini al
           const emptySpaces = Object.keys(data).filter(
             (key) => data[key].durum === "boş"
           );
@@ -81,6 +81,10 @@ const Tab2 = () => {
           <div className="bottom-round">
             <p>{emptyParkingSpaces.length}</p>
           </div>
+        </div>
+        <div className="info">
+          <h1>Park Yerleri Yönetimi</h1>
+          <p>Boş park yerlerini görüntüleyin ve rezervasyon yapın.</p>
         </div>
         <IonButton className="b-0" id="open-modal">
           Boş Yerleri Gör

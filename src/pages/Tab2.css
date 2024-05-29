@@ -21,3 +21,25 @@ ion-item {
 ion-list {
   padding: 30px;
 }
+
+.info {
+  text-align: center;
+  margin: 40px 12px 0 12px;
+  padding: 16px;
+  background: rgba(231, 233, 234, 0.42);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.9px);
+  -webkit-backdrop-filter: blur(3.9px);
+  border: 1px solid rgba(231, 233, 234, 0.2);
+}
+
+.info h1 {
+  font-size: 2em;
+  color: #4a40b8;
+}
+
+.info p {
+  font-size: 1em;
+  color: #696969;
+}
